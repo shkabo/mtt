@@ -18,6 +18,18 @@ framework:
     php_errors:
         log: true
 
+    http_client:
+        scoped_clients:
+            shift4.client:
+                base_uri: '%env(resolve:SHIFT4_URL)%'
+                auth_basic: '%env(resolve:SHIFT4_SECRET_KEY)%:%env(resolve:SHIFT4_PASSWORD)%'
+
+            aci.client:
+                base_uri: '%env(resolve:ACI_URL)%'
+                headers:
+                    Authorization: 'Bearer %env(resolve:ACI_TOKEN)%'
+                    Content-Type: 'application/x-www-form-urlencoded; charset=UTF-8'
+
 when@test:
     framework:
         test: true
