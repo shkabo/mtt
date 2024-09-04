@@ -9,7 +9,7 @@ class TransactionControllerTest extends KernelTestCase
 {
     use HasBrowser;
 
-    public function testCreateACITransactionChargeEndpoint()
+    public function testCreateACITransactionChargeEndpoint(): void
     {
         $this->browser()->post('/api/transaction/charge/aci', ['body' => $this->getPostData()])
             ->assertStatus(200)
@@ -23,7 +23,7 @@ class TransactionControllerTest extends KernelTestCase
             });
     }
 
-    public function testCreateShift4TransactionChargeEndpoint()
+    public function testCreateShift4TransactionChargeEndpoint(): void
     {
         $this->browser()->post('/api/transaction/charge/shift4', ['body' => $this->getPostData()])
             ->assertStatus(200)
@@ -37,7 +37,7 @@ class TransactionControllerTest extends KernelTestCase
             });
     }
 
-    public function testInvalidParametersTransactionChargeEndpoint()
+    public function testInvalidParametersTransactionChargeEndpoint(): void
     {
         $date = (new \DateTime())->modify('+5 years');
         $data = [

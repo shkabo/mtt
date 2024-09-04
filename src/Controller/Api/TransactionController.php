@@ -23,6 +23,6 @@ class TransactionController extends AbstractController
             ], 400);
         }
 
-        return $this->json($response, 200);
+        return $this->json($response->toArray());
     }
 }
