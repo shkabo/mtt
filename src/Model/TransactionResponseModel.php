@@ -39,4 +39,16 @@ class TransactionResponseModel
         return $this->transactionDate;
     }
 
+    public function toArray(): array
+    {
+        return [
+            'transactionId' => $this->transactionId,
+            'transactionAmount' => $this->transactionAmount,
+            'transactionCurrency' => $this->transactionCurrency,
+            'cardBin' => $this->cardBin,
+            'transactionDate' => $this->transactionDate->format(\DateTimeInterface::RFC3339),
+        ];
+
+    }
+
 }
