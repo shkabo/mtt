@@ -48,13 +48,13 @@ class Shift4PaymentProcessor implements PaymentProcessorInterface, LoggerAwareIn
         try {
             $response = $this->shift4Client->request('POST', '/charges', [
                 'body' => [
-                    'amount' => $transactionDTO->getAmount() * 100, // in cents
+                    'amount'   => $transactionDTO->getAmount() * 100, // in cents
                     'currency' => $transactionDTO->getCurrency(),
-                    'card' => [
-                        'number' => $transactionDTO->getCardNumber(),
+                    'card'     => [
+                        'number'   => $transactionDTO->getCardNumber(),
                         'expMonth' => $transactionDTO->getCardExpiryMonth(),
-                        'expYear' => $transactionDTO->getCardExpiryYear(),
-                        'cvc' => $transactionDTO->getCardCvv(),
+                        'expYear'  => $transactionDTO->getCardExpiryYear(),
+                        'cvc'      => $transactionDTO->getCardCvv(),
                     ],
                 ]
             ]);
@@ -63,11 +63,11 @@ class Shift4PaymentProcessor implements PaymentProcessorInterface, LoggerAwareIn
             // e.g. check status from returned json object if it's successful etc.
             // for the sake of this app we'll keep it simple and do some basic checks
             if ($response->getStatusCode() !== 200) {
-                throw new \Exception('Invalid response code: '. $response->getStatusCode());
+                throw new \Exception('Invalid response code: '.$response->getStatusCode());
             }
-
         } catch (\Exception|ExceptionInterface|ClientException|TransportExceptionInterface $e) {
-            $this->logger->error('[Shift4PaymentProcessor] API operation failed: ' . $e->getMessage(), ['transactionDTO' => $transactionDTO]);
+            $this->logger->error('[Shift4PaymentProcessor] API operation failed: '.$e->getMessage(), ['transactionDTO' => $transactionDTO]);
+
             throw new PaymentProcessorException('There was an error processing your request', previous: $e);
         }
 

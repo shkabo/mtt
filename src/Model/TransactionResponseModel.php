@@ -10,8 +10,7 @@ class TransactionResponseModel
         private readonly string $transactionCurrency,
         private readonly string $cardBin,
         private readonly \DateTimeImmutable $transactionDate = new \DateTimeImmutable('now')
-    )
-    {
+    ) {
     }
 
     public function getTransactionId(): string
@@ -42,13 +41,11 @@ class TransactionResponseModel
     public function toArray(): array
     {
         return [
-            'transactionId' => $this->transactionId,
-            'transactionAmount' => $this->transactionAmount,
+            'transactionId'       => $this->transactionId,
+            'transactionAmount'   => $this->transactionAmount,
             'transactionCurrency' => $this->transactionCurrency,
-            'cardBin' => $this->cardBin,
-            'transactionDate' => $this->transactionDate->format(\DateTimeInterface::RFC3339),
+            'cardBin'             => $this->cardBin,
+            'transactionDate'     => $this->transactionDate->format(\DateTimeInterface::RFC3339),
         ];
-
     }
-
 }

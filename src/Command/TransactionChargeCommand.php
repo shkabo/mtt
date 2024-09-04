@@ -7,14 +7,12 @@ use App\Exception\PaymentProcessorException;
 use App\Service\PaymentProcessorRepository;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\Input;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Validator\Validation;
-use Symfony\Component\Validator\ValidatorBuilder;
 
 #[AsCommand(
     name: 'app:transaction-charge',
@@ -31,7 +29,7 @@ class TransactionChargeCommand extends Command
     protected function configure(): void
     {
         $this
-            ->addOption('listProcessors', null,InputOption::VALUE_NONE, 'Outputs list of available payment processors')
+            ->addOption('listProcessors', null, InputOption::VALUE_NONE, 'Outputs list of available payment processors')
             ->addArgument('paymentProcessor', InputArgument::OPTIONAL, 'Payment Processor to use')
             ->addOption('amount', null, InputOption::VALUE_OPTIONAL, 'Amount to be charged')
             ->addOption('currency', null, InputOption::VALUE_OPTIONAL, 'Currency to charge (e.g. USD/EUR)')
@@ -62,11 +60,11 @@ class TransactionChargeCommand extends Command
         }
 
         $paymentProcessor = $input->getArgument('paymentProcessor');
-        $validator = Validation::createValidatorBuilder()->enableAttributeMapping()->getValidator();
+        $validator        = Validation::createValidatorBuilder()->enableAttributeMapping()->getValidator();
 
         // check if we have all parameters so that we can make transaction
         $missing = false;
-        foreach(['amount', 'currency', 'cardNumber', 'cardExpiryYear', 'cardExpiryMonth', 'cardCvv'] as $option) {
+        foreach (['amount', 'currency', 'cardNumber', 'cardExpiryYear', 'cardExpiryMonth', 'cardCvv'] as $option) {
             if (!$input->getOption($option)) {
                 $missing = true;
                 $io->warning("Option '{$option}' is required");
@@ -89,6 +87,7 @@ class TransactionChargeCommand extends Command
 
         // validate our DTO object
         $errors = $validator->validate($transactionDto);
+
         if (count($errors) > 0) {
             foreach ($errors as $error) {
                 $io->error($error->getMessage());
@@ -108,7 +107,7 @@ class TransactionChargeCommand extends Command
             $table = $io->createTable();
             $table->setHeaderTitle('Transaction result');
             $table->setHeaders(['Field', 'Value']);
-            foreach($transactionResult->toArray() as $field => $value) {
+            foreach ($transactionResult->toArray() as $field => $value) {
                 $table->addRow([$field, $value]);
             }
             $table->render();

@@ -14,7 +14,7 @@ class TransactionControllerTest extends KernelTestCase
         $this->browser()->post('/api/transaction/charge/aci', ['body' => $this->getPostData()])
             ->assertStatus(200)
             ->assertJson()
-            ->use(function(\Zenstruck\Browser\Json $json) {
+            ->use(function (\Zenstruck\Browser\Json $json) {
                 $json->assertHas('transactionId');
                 $json->assertHas('transactionAmount');
                 $json->assertHas('transactionCurrency');
@@ -28,7 +28,7 @@ class TransactionControllerTest extends KernelTestCase
         $this->browser()->post('/api/transaction/charge/shift4', ['body' => $this->getPostData()])
             ->assertStatus(200)
             ->assertJson()
-            ->use(function(\Zenstruck\Browser\Json $json) {
+            ->use(function (\Zenstruck\Browser\Json $json) {
                 $json->assertHas('transactionId');
                 $json->assertHas('transactionAmount');
                 $json->assertHas('transactionCurrency');
@@ -41,12 +41,12 @@ class TransactionControllerTest extends KernelTestCase
     {
         $date = (new \DateTime())->modify('+5 years');
         $data = [
-            'cardNumber' => '4200000000000000',
-            'cardExpiryYear' => $date->format('Y'),
+            'cardNumber'      => '4200000000000000',
+            'cardExpiryYear'  => $date->format('Y'),
             'cardExpiryMonth' => '123', // invalid date
-            'cardCvv'   => '123',
-            'amount'    => '12',
-            'currency'  => 'EUR',
+            'cardCvv'         => '123',
+            'amount'          => '12',
+            'currency'        => 'EUR',
         ];
 
         $this->browser()->post('/api/transaction/charge/shift4', ['body' => $data])
@@ -59,13 +59,14 @@ class TransactionControllerTest extends KernelTestCase
     private function getPostData(): array
     {
         $date = (new \DateTime())->modify('+5 years');
+
         return [
-            'cardNumber' => '4200000000000000',
-            'cardExpiryYear' => $date->format('Y'),
+            'cardNumber'      => '4200000000000000',
+            'cardExpiryYear'  => $date->format('Y'),
             'cardExpiryMonth' => $date->format('m'),
-            'cardCvv'   => '123',
-            'amount'    => '12',
-            'currency'  => 'EUR',
+            'cardCvv'         => '123',
+            'amount'          => '12',
+            'currency'        => 'EUR',
         ];
     }
 }

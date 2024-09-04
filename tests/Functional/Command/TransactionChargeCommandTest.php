@@ -29,7 +29,7 @@ class TransactionChargeCommandTest extends KernelTestCase
     public function testTransactionCommandChargeMissingTransactionParameters()
     {
         $this->consoleCommand('app:transaction-charge')
-            ->addArgument( 'aci')
+            ->addArgument('aci')
             ->execute()
             ->assertFaulty()
             ->assertOutputContains("Option 'amount' is required")
@@ -45,7 +45,7 @@ class TransactionChargeCommandTest extends KernelTestCase
     {
         $date = (new \DateTime())->modify('+5 years');
         $this->consoleCommand('app:transaction-charge')
-            ->addArgument( 'aci')
+            ->addArgument('aci')
             ->addOption('amount', '12')
             ->addOption('currency', 'EUR')
             ->addOption('cardNumber', '4200000000000000')
@@ -67,7 +67,7 @@ class TransactionChargeCommandTest extends KernelTestCase
     {
         $date = (new \DateTime())->modify('+5 years');
         $this->consoleCommand('app:transaction-charge')
-            ->addArgument( 'aci')
+            ->addArgument('aci')
             ->addOption('amount', '12')
             ->addOption('currency', 'RSD')
             ->addOption('cardNumber', '4200000000000000')

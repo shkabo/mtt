@@ -13,8 +13,8 @@ class AciPaymentProcessorTest extends KernelTestCase
     {
         self::bootKernel();
         $aciProcessorService = self::getContainer()->get(AciPaymentProcessor::class);
-        $date = (new \DateTime())->modify('+5 years');
-        $transactionDTO = new TransactionDTO(
+        $date                = (new \DateTime())->modify('+5 years');
+        $transactionDTO      = new TransactionDTO(
             cardNumber: '4200000000000000',
             cardExpiryYear: $date->format('Y'),
             cardExpiryMonth: $date->format('m'),

@@ -16,29 +16,24 @@ class TransactionDTO
                 ],
         )]
         private readonly string $cardNumber,
-
         #[Assert\NotBlank]
         #[Assert\Expression(
             expression: 'this.isValidYear(value)',
             message: "Card Year must be a valid year and not in the past"
         )]
         private readonly string $cardExpiryYear,
-
         #[Assert\NotBlank]
         #[Assert\Regex(
             pattern: '/^(0?[1-9]|1[012])$/',
-            message: 'Card Expiry Month must be a valid month number')
-        ]
+            message: 'Card Expiry Month must be a valid month number'
+        )]
         private readonly string $cardExpiryMonth,
-
         #[Assert\NotBlank]
         #[Assert\Length(min: 3, max: 3)]
         private readonly int $cardCvv,
-
         #[Assert\NotBlank]
         #[Assert\PositiveOrZero]
         private readonly float|int $amount = 0,
-
         #[Assert\NotBlank]
         #[Assert\Currency]
         #[Assert\Choice(choices: ['USD', 'EUR'])]

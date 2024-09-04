@@ -13,8 +13,8 @@ class Shift4PaymentProcessorTest extends KernelTestCase
     {
         self::bootKernel();
         $shift4ProcessorService = self::getContainer()->get(Shift4PaymentProcessor::class);
-        $date = (new \DateTime())->modify('+5 years');
-        $transactionDTO = new TransactionDTO(
+        $date                   = (new \DateTime())->modify('+5 years');
+        $transactionDTO         = new TransactionDTO(
             cardNumber: '4200000000000000',
             cardExpiryYear: $date->format('Y'),
             cardExpiryMonth: $date->format('m'),

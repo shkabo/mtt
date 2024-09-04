@@ -8,7 +8,6 @@ use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
 
 class PaymentProcessorRepository
 {
-
     private array $gateways = [];
 
     public function __construct(#[TaggedIterator('payment_gateway')] iterable $paymentGateways)
