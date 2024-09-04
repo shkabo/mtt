@@ -52,7 +52,7 @@ class AciPaymentProcessor implements PaymentProcessorInterface, LoggerAwareInter
     /**
      * @throws PaymentProcessorException
      */
-    private function serverToServerDebitPayment(TransactionDTO $transactionDTO)
+    private function serverToServerDebitPayment(TransactionDTO $transactionDTO): array
     {
         try {
             $response = $this->aciClient->request('POST', '/v1/payments', [
