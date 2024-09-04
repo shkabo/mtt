@@ -18,11 +18,17 @@ class TransactionDTO
         private readonly string $cardNumber,
 
         #[Assert\NotBlank]
-        #[Assert\DateTime(format: 'Y')]
+        #[Assert\Expression(
+            expression: 'this.isValidYear(value)',
+            message: "Card Year must be a valid year and not in the past"
+        )]
         private readonly string $cardExpiryYear,
 
         #[Assert\NotBlank]
-        #[Assert\DateTime(format: 'm')]
+        #[Assert\Regex(
+            pattern: '/^(0?[1-9]|1[012])$/',
+            message: 'Card Expiry Month must be a valid number')
+        ]
         private readonly string $cardExpiryMonth,
 
         #[Assert\NotBlank]
@@ -68,5 +74,10 @@ class TransactionDTO
     public function getCurrency(): string
     {
         return $this->currency;
+    }
+
+    public function isValidYear(?string $year): bool
+    {
+        return !is_null($year) && $year === date('Y');
     }
 }
