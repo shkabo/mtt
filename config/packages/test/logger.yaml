@@ -1,0 +1,7 @@
+services:
+  # Override the logger service with NullLogger in the test environment
+  Psr\Log\LoggerInterface:
+    alias: 'logger'
+
+  logger:
+    class: Psr\Log\NullLogger
