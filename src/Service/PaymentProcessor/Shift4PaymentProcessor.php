@@ -36,7 +36,7 @@ class Shift4PaymentProcessor implements PaymentProcessorInterface, LoggerAwareIn
 
         return new TransactionResponseModel(
             transactionId: $charge['id'],
-            transactionAmount: $charge['amount'],
+            transactionAmount: $charge['amount'] / 100,
             transactionCurrency: $charge['currency'],
             cardBin: $charge['card']['id'],
             transactionDate: new \DateTimeImmutable($charge['created']),

@@ -27,6 +27,6 @@ class Shift4PaymentProcessorTest extends KernelTestCase
 
         $this->assertInstanceOf(TransactionResponseModel::class, $transaction);
         $this->assertEquals($transactionDTO->getCurrency(), $transaction->getTransactionCurrency());
-        $this->assertEquals($transactionDTO->getAmount() * 100, $transaction->getTransactionAmount());
+        $this->assertEquals($transactionDTO->getAmount(), $transaction->getTransactionAmount());
     }
 }
