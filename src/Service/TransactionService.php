@@ -9,7 +9,7 @@ use App\Model\TransactionResponseModel;
 class TransactionService
 {
     public function __construct(
-        private readonly PaymentProcessorRepository $gatewayRepository
+        private readonly PaymentProcessorRepository $paymentProcessorRepository
     ) {
     }
 
@@ -18,9 +18,14 @@ class TransactionService
      */
     public function doPurchase(string $paymentGateway, TransactionDTO $transactionDTO): TransactionResponseModel
     {
-        $gateway = $this->gatewayRepository->getPaymentGateway($paymentGateway);
+        $gateway = $this->paymentProcessorRepository->getPaymentGateway($paymentGateway);
 
         return $gateway->makeTransaction($transactionDTO);
+    }
+
+    public function getPaymentProcessorRepository(): PaymentProcessorRepository
+    {
+        return $this->paymentProcessorRepository;
     }
 
     public function doRefund()

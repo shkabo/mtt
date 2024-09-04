@@ -4,7 +4,7 @@ namespace App\Command;
 
 use App\DTO\TransactionDTO;
 use App\Exception\PaymentProcessorException;
-use App\Service\PaymentProcessorRepository;
+use App\Service\TransactionService;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -21,7 +21,7 @@ use Symfony\Component\Validator\Validation;
 class TransactionChargeCommand extends Command
 {
     public function __construct(
-        private readonly PaymentProcessorRepository $paymentProcessorRepository,
+        private readonly TransactionService $transactionService,
     ) {
         parent::__construct();
     }
@@ -47,7 +47,7 @@ class TransactionChargeCommand extends Command
         // output list of available Payment Processors that we have in our repository
         if ($input->getOption('listProcessors')) {
             $io->title('Payment Processors');
-            $io->listing($this->paymentProcessorRepository->getPaymentGatewayNames());
+            $io->listing($this->transactionService->getPaymentProcessorRepository()->getPaymentGatewayNames());
 
             return Command::SUCCESS;
         }
@@ -76,6 +76,8 @@ class TransactionChargeCommand extends Command
         }
 
         // build DTO
+        // we should add more validation for input from the CLI before trying to build object
+        // but for the sake of the test, we'll assume that input will be correct
         $transactionDto = new TransactionDTO(
             cardNumber: $input->getOption('cardNumber'),
             cardExpiryYear: $input->getOption('cardExpiryYear'),
@@ -98,9 +100,8 @@ class TransactionChargeCommand extends Command
 
         // make transaction
         try {
-            $transactionResult = $this->paymentProcessorRepository
-                ->getPaymentGateway($paymentProcessor)
-                ->makeTransaction($transactionDto);
+            $transactionResult = $this->transactionService
+                ->doPurchase($paymentProcessor, $transactionDto);
 
             // add some styling to the output
             $io->success('Charge successful');
