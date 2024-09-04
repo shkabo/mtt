@@ -27,7 +27,7 @@ class TransactionDTO
         #[Assert\NotBlank]
         #[Assert\Regex(
             pattern: '/^(0?[1-9]|1[012])$/',
-            message: 'Card Expiry Month must be a valid number')
+            message: 'Card Expiry Month must be a valid month number')
         ]
         private readonly string $cardExpiryMonth,
 
@@ -78,6 +78,6 @@ class TransactionDTO
 
     public function isValidYear(?string $year): bool
     {
-        return !is_null($year) && $year === date('Y');
+        return !is_null($year) && $year >= date('Y');
     }
 }
