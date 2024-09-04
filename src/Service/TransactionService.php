@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\DTO\TransactionDTO;
+use App\Exception\PaymentProcessorException;
 use App\Model\TransactionResponseModel;
 
 class TransactionService
@@ -12,6 +13,9 @@ class TransactionService
     ) {
     }
 
+    /**
+     * @throws PaymentProcessorException
+     */
     public function doPurchase(string $paymentGateway, TransactionDTO $transactionDTO): TransactionResponseModel
     {
         $gateway = $this->gatewayRepository->getPaymentGateway($paymentGateway);
